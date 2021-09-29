@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="icon" href="hotel.ico">
+	<link rel="stylesheet" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Grechen+Fuemen&display=swap" rel="stylesheet">
+	<style>
+		
+	.left,.right {
+		height: 100%;
+		position: fixed;
+		z-index: 1;
+		top: 0;
+		overflow-x: hidden;
+		padding-top: 20px;
+	}
+	.left {
+		left: 0;
+		width: 45%;
+		background-image: url(img/bg.png);
+	}
+	.right {
+		right: 0;
+		width: 55%;
+	}
+	.head
+	{
+		text-align: center;
+		margin: 0;
+		font-size: 4em;
+		font-family: 'Grechen Fuemen', cursive;;
+		font-weight: bold;
+		color: white;
+	}
+	</style>
+
+</head>
+<body>
+<div class="left">
+</div>
+<div class="right">
+ <h1 class="head">ATS Restaurtant</h1>
+	<div class="center">
+		
+        <form id="signupform" onsubmit="signup()">
+			<h1>Signup</h1>
+			<small><span id="error" style="color: red;"></span></small>
+			<div class="txt_field">
+            	<input id="email" type="email" name="email" required> 
+				<span></span>
+				<label>Email</label>
+			</div>
+			<div class="txt_field">
+            <input id="password" type="password" name="password" required>
+			<span></span>
+			<label>Password</label> 
+			</div>
+            <button type="submit" class="subbtn">Signup</button>
+             <div class="link">Already a member? <a href="login.html">Login</a></div>
+			
+			
+        </form>
+    </div>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+ <script src="js/firebase.js"></script>
+ <script src="js/signup.js"></script>
+</body>
+</html>

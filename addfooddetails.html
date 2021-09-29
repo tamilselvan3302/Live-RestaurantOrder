@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Restaurant</title>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style1.css">
+    <style>
+        img
+        {
+            height: 200px;
+            width: 200px;
+            border: 2px solid black;
+        }
+        .wrapper .sidebar ul #men{
+            background: #9a8fd4;
+        }
+        .wrapper .sidebar ul li a{
+            color: #fff;
+        }
+    </style>
+</head>
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2>Welcome</h2>
+            <ul>
+                <li id="hom"><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                <li id="men"><a href="menu.html"><i class="fas fa-utensils"></i>Menu</a></li>
+                <li id="car"><a href="cart.html"><i class="fas fa-cart-plus"></i>cart</a></li>
+                <li id="off"><a href="#"><i class="fas fa-percent"></i>offers</a></li>
+                <li id="log"><a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+            </ul>
+            <div class="social_media">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+
+            </div>
+            <div>
+
+            </div>
+        </div>
+    
+        <div class="main_content">
+            <div class="header">Add New Food details</div>
+            <br>
+            <section class="menu" id="menu">
+            
+                   <input id="idbox" type="text" placeholder="Enter food ID"><br>
+                   <input id="namebox" type="text" placeholder="Enter Food Name"><br>
+                   <input id="pricebox" type="number" min="0" placeholder="Enter Price"><br><br>
+                    <img id="myimg" ><br>    
+                    <button id="select" class="btn cart">select  image</button>
+                    <br>
+                    <label id="upprogress" ></label><br>
+                    <br>
+                    <button id="insert" class="btn order">Add Food</button>
+            </section>
+        </div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script type="module">
+    
+      const firebaseConfig = {
+        apiKey: "AIzaSyADoT95ig0pU3YSBQn5xCD7r96fMRYlWDI",
+        authDomain: "live-restaurant-order.firebaseapp.com",
+        projectId: "live-restaurant-order",
+        storageBucket: "live-restaurant-order.appspot.com",
+        messagingSenderId: "164826896042",
+        appId: "1:164826896042:web:51a60f2ff0825919e0e2d3",
+        databaseURL:"https://live-restaurant-order-default-rtdb.firebaseio.com/"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      //reading data
+      var nameV,idV,priceV;
+      var imgname,imgurl;
+      var files=[];
+      var reader=new FileReader();
+
+      function ready()
+      {   idV=document.getElementById('idbox').value;
+          nameV=document.getElementById('namebox').value;
+          
+          priceV=document.getElementById('pricebox').value;
+         
+          console.log("intitialized");
+
+      }
+      //insert
+      document.getElementById('insert').onclick=function()
+      {
+          ready();
+
+          console.log("img upload");
+          imgname= document.getElementById('idbox').value +"_"+ document.getElementById('namebox').value;;
+          var uploadtask = firebase.storage().ref('images/'+imgname+".png").put(files[0]);
+
+          uploadtask.on('state_changed',function(snapshot){
+              var progress=(snapshot.bytesTransferred / snapshot.totalBytes)*100;
+              document.getElementById('upprogress').innerHTML='Progress :'+progress+'%'
+          },
+
+          //error
+
+          function(error){
+              alert('eroor in saving file');
+          },
+          //submit img link to database
+          function(){
+                    uploadtask.snapshot.ref.getDownloadURL().then(function(url){
+                    imgurl=url;
+                    console.log("insert");
+
+                    firebase.database().ref('food/'+idV).set({
+                        name: nameV,
+                        idno: idV,
+                        price: priceV,
+                        Link : imgurl
+                    },(error) => {
+                        if (error) {
+                        } else {
+                            location.href = "menu.html";
+                        }
+                      });
+                    
+                   
+                    console.log("inserted");
+                    firebase.database().ref('food/'+idV).on('value',function(snapshot){
+                        console.log(snapshot.val().name);
+                        console.log(snapshot.val().idno);
+                        console.log(snapshot.val().price);
+                        console.log(snapshot.val().Link);
+                    });
+    
+                     alert('details added successfullly');
+                 
+                
+                     
+                     
+                     
+
+            }
+          );
+          
+         
+        });
+        
+
+      }
+      document.getElementById("select").onclick= function(e)
+      {   console.log("select");
+          var input=document.createElement('input');
+          input.type='file';
+          input.onchange=e=>{
+              files= e.target.files;
+              reader = new FileReader();
+              reader.onload = function()
+              {
+                document.getElementById("myimg").src = reader.result;
+              }
+              reader.readAsDataURL(files[0]);
+          }
+          input.click();
+      }
+
+
+
+    
+    
+
+
+
+    </script>
+
+</body>
+</html>
+  
