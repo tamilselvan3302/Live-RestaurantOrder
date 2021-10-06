@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style1.css">
     <style>
-        .wrapper .sidebar ul #men{
+        .wrapper .sidebar ul #car{
             background: #9a8fd4;
         }
         .wrapper .sidebar ul li a{
@@ -22,9 +22,9 @@
         <div class="sidebar">
             <h2>Welcome</h2>
             <ul>
-                <li id="hom"><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-                <li id="men"><a href="menu.html"><i class="fas fa-utensils"></i>Menu</a></li>
-                <li id="car"><a href="cart.html"><i class="fas fa-cart-plus"></i>cart</a></li>
+                <li id="hom"><a href="index_admin.html"><i class="fas fa-home"></i>Home</a></li>
+                <li id="men"><a href="menu_admin.html"><i class="fas fa-utensils"></i>Menu</a></li>
+                <li id="car"><a href="Vieworder.html"><i class="fas fa-store"></i>Orders</a></li>
                 <li id="off"><a href="#"><i class="fas fa-percent"></i>offers</a></li>
                 <li id="log"><a type="button" class="logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
             </ul>
@@ -38,21 +38,13 @@
 
             </div>
         </div>
-    
+
         <div class="main_content">
             <div class="header">Welcome have a nice day.</div>
-            <br>
-            <section class="menu" id="menu">
-                <a href="cart.html" class="btn order">Go To Cart</a>
-                <input class="tit searchbar" id="searchbar" onkeyup="search_food()" type="text" name="search" placeholder="Search foods..">
-                <br><br>
-                <div class="box-container" id="box-container">
-                    
-                   
-                </div>
-
-            </section>
+            
         </div>
+    
+        
     </div>
 
 <!--         
@@ -64,10 +56,11 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="js/firebase.js"></script>
+   <script src="js/payment.js"></script>
 
-
-  <script src="js/menu.js"></script>
   <script src="js/search.js"></script>
+  
   <script src="js/logout.js"></script>
 </body>
 </html>

@@ -4,8 +4,17 @@ document.getElementById("loginform").addEventListener("submit",(event)=>{
 
 firebase.auth().onAuthStateChanged((user)=>{
     if(user)
-    {
-        location.replace("index.html")
+    {  
+         if(user.email=="admin@gmail.com")
+        {
+            location.replace("index_admin.html");
+        }
+        else
+        {
+            location.replace("index.html")
+
+        }
+        console.log(user)
     } 
 })
 

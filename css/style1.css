@@ -97,6 +97,9 @@ body
     background: #fff;
     color: #717171;
     border-bottom: 1px solid;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
 }
 
 .wrapper .main_content .info
@@ -107,6 +110,7 @@ body
 }
 .wrapper .main_content .menu
 { padding-left: 10px;
+  padding-top: 50px;
   margin: 20px;
   color: #717171;
   line-height: 25px;

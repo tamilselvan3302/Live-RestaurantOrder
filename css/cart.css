@@ -2,7 +2,8 @@
 .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 0 1.5em;
+    padding: 0 1.2em;
+    padding-top: 100px;
 }
 .rem-btn {
     text-align: center;
@@ -111,7 +112,7 @@
 .cart-total {
     text-align: end;
     margin-top: 10px;
-    margin-right: 10px;
+    margin-right: 130px;
 }
 
 .cart-total-title {
@@ -123,7 +124,7 @@
 
 .cart-total-price {
     color: #333;
-    font-size: 1.1em;
+    font-size: 1.8em;
 }
 
 .btn-purchase {

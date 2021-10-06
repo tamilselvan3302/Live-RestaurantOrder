@@ -9,7 +9,33 @@ const firebaseConfig = {
   };
   firebase.initializeApp(firebaseConfig);
 
-  
+  firebase.auth().onAuthStateChanged((user)=>{
+    if(!user)
+    {
+        location.replace("login.html")
+     }
+    // else
+    // {
+    //     document.getElementById("message").innerHTML="Hello, "+user.email.replace("@gmail.com",'')
+    // }
+})
+var user;
+firebase.auth().onAuthStateChanged((usr)=>{
+    if(!usr)
+    {
+        location.replace("login.html");
+    }
+    else if(usr.email!="admin@gmail.com")
+    {
+        location.replace("menu.html");
+    }
+    else
+    {
+        user=usr.email.replace("@gmail.com",'');
+        window.onload= myFunction();
+    }
+})
+
 
     function createelemnet(ele,value)
     {
@@ -33,8 +59,9 @@ const firebaseConfig = {
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <button href="#" class="btn cart" data-id="${idnoV}">Edit food</button>
-                <button href="#" class="btn order">Remove Food</button>
+                <a href="Updatefooddetails.html"><button href="#" class="btn cart" data-id="${idnoV}">Edit food</button></a>
+               
+                <button href="#" class="btn order removefood" data-id="${idnoV}" >Remove food</button>
             </div>
         </div>`
 
@@ -65,32 +92,46 @@ const firebaseConfig = {
             
         }
     );
-    cartbuttonupdate()
+
    
 
         }); 
+
+        
           
 
     }
-    window.onload= myFunction();
+    
 
 
 
         
         function ready() {
-
-            var addToCartButtons = document.querySelectorAll('.cart');
-            // console.log("hello", addToCartButtons.length);
-            // console.log( addToCartButtons);
-
-            for (var i = 0; i < addToCartButtons.length; i++) {
-                var button = addToCartButtons[i];
-                button.addEventListener('click',editfood);
-             }
+            var removefoodItemButtons = document.getElementsByClassName('removefood')
+            for (var i = 0; i < removefoodItemButtons.length; i++) {
+                var button = removefoodItemButtons[i];
+                button.addEventListener('click',removefoodItem);
+            }
+           
         }
-    
 
-        async function editfood()
-        {
-            location.href = "addfooddetails.html";
-        }
+    async function removefoodItem(event)
+    {
+        
+
+        // let data = await firebase.database().ref('cart/'+user).get();
+        // var count = data.numChildren();
+        // console.log(count);
+        console.log(this.dataset.id,"h",event.target.getAttribute('data-id'));
+        var dataID =this.dataset.id;
+
+        firebase.database().ref('food/'+dataID).remove();
+
+        var buttonClicked = event.target;
+        buttonClicked.parentElement.parentElement.remove();
+        console.log(buttonClicked.parentElement.getElementsByClassName("rem-btn")[0].innerText);
+
+
+
+    }
+        

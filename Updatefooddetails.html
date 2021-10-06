@@ -24,7 +24,6 @@
     </style>
 </head>
 
-
 </head>
 <body>
     <div class="wrapper">
@@ -49,11 +48,11 @@
         </div>
     
         <div class="main_content">
-            <div class="header">Add New Food details</div>
+            <div class="header">Update Food details</div>
             <br>
             <section class="menu" id="menu">
             
-                   <input id="idbox" type="text" placeholder="Enter food ID"><br>
+                   <input id="idbox" type="text" placeholder="Enter food ID" value=001 readonly><br>
                    <input id="namebox" type="text" placeholder="Enter Food Name"><br>
                    <input id="pricebox" type="number" min="0" placeholder="Enter Price"><br><br>
                     <img id="myimg" ><br>    
@@ -61,7 +60,7 @@
                     <br>
                     <label id="upprogress" ></label><br>
                     <br>
-                    <button id="insert" class="btn order">Add Food</button>
+                    <button id="insert" class="btn order">Update Details</button>
             </section>
         </div>
     </div>
@@ -84,8 +83,6 @@
         databaseURL:"https://live-restaurant-order-default-rtdb.firebaseio.com/"
       };
       firebase.initializeApp(firebaseConfig);
-
- 
 
       //reading data
       var nameV,idV,priceV;
@@ -181,19 +178,6 @@
 
     </script>
     <script src="js/logout.js"></script>
-
 </body>
 </html>
   
-
-<!-- 
-firebase.auth().onAuthStateChanged((usr)=>{
-    if(!usr)
-    {
-        location.replace("login.html");
-    }
-    else if(usr.email!="admin@gmail.com")
-    {
-        location.replace("menu.html");
-    }
-}) -->

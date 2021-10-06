@@ -16,8 +16,15 @@ const firebaseConfig = {
       {
           location.replace("login.html")
       }
+      else if(usr.email=="admin@gmail.com")
+    {
+        location.replace("payment.html");
+    }
       else
-      {
+      {   console.log(usr.displayName);
+        console.log(usr.email);
+        console.log(usr.photoURL);
+        console.log(usr.emailVerified);
           user=usr.email.replace("@gmail.com",'');
           window.onload= myFunction();
       }
@@ -112,8 +119,11 @@ function updateCartTotal()
         
     }
     total= Math.round(total*100)/100;
-    document.getElementsByClassName('cart-total-price')[0].innerText='$'+ total;
+    //updatetotal(total);
+    document.getElementsByClassName('cart-total-price')[0].innerText='$'+ total;   
+    
 }
+
 
 
 
@@ -135,6 +145,7 @@ function adddetails(nameV, idnoV,priceV,linkV,quantityV)
    </div>`
 
     updateCartTotal();
+  
     if (document.readyState == 'loading') {
         document.addEventListener('DOMContentLoaded', ready)
         } else {
@@ -168,4 +179,16 @@ function myFunction() {
       
 
 }
-
+// async function updatetotal(tot)
+// {
+//     console.log("updatetotal");
+//     firebase.database().ref('cart/'+user+'/Total').set({
+//         Amount: tot        
+//     },(error) => {
+//         if (error) {
+//             console.log("error",error)
+//         } else {
+//             console.log("Total updated");
+//         }
+//     });
+// }

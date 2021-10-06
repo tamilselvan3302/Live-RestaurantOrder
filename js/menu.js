@@ -25,6 +25,10 @@ firebase.auth().onAuthStateChanged((usr)=>{
     {
         location.replace("login.html");
     }
+    else if(usr.email=="admin@gmail.com")
+    {
+        location.replace("menu_admin.html");
+    }
     else
     {
         user=usr.email.replace("@gmail.com",'');
