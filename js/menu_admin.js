@@ -9,6 +9,7 @@ const firebaseConfig = {
   };
   firebase.initializeApp(firebaseConfig);
 
+
   firebase.auth().onAuthStateChanged((user)=>{
     if(!user)
     {
@@ -20,6 +21,15 @@ const firebaseConfig = {
     // }
 })
 var user;
+
+
+async function foodcount(){
+
+    let i = document.querySelectorAll('.card');
+    console.log("food count" ,i.length);
+  }
+  
+
 firebase.auth().onAuthStateChanged((usr)=>{
     if(!usr)
     {
@@ -59,7 +69,7 @@ firebase.auth().onAuthStateChanged((usr)=>{
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <a href="Updatefooddetails.html"><button href="#" class="btn cart" data-id="${idnoV}">Edit food</button></a>
+                <button href="#" class="btn cart updatefood" data-id="${idnoV}">Edit food</button>
                
                 <button href="#" class="btn order removefood" data-id="${idnoV}" >Remove food</button>
             </div>
@@ -69,12 +79,13 @@ firebase.auth().onAuthStateChanged((usr)=>{
         if (document.readyState == 'loading') {
             document.addEventListener('DOMContentLoaded', ready)
             } else {
-                ready()
+                ready();
+                
             }
 
         
 
-
+            
     }
 
     function myFunction() {
@@ -92,10 +103,12 @@ firebase.auth().onAuthStateChanged((usr)=>{
             
         }
     );
+    foodcount();
 
    
 
         }); 
+        
 
         
           
@@ -107,10 +120,15 @@ firebase.auth().onAuthStateChanged((usr)=>{
 
         
         function ready() {
-            var removefoodItemButtons = document.getElementsByClassName('removefood')
+            var removefoodItemButtons = document.getElementsByClassName('removefood');
+            var updateItemButtons = document.getElementsByClassName('updatefood');
             for (var i = 0; i < removefoodItemButtons.length; i++) {
                 var button = removefoodItemButtons[i];
                 button.addEventListener('click',removefoodItem);
+            }
+            for (var i = 0; i < updateItemButtons.length; i++) {
+                var button = updateItemButtons[i];
+                button.addEventListener('click',updatefoodItem);
             }
            
         }
@@ -125,13 +143,67 @@ firebase.auth().onAuthStateChanged((usr)=>{
         console.log(this.dataset.id,"h",event.target.getAttribute('data-id'));
         var dataID =this.dataset.id;
 
+        
+
         firebase.database().ref('food/'+dataID).remove();
 
+
+        
+
         var buttonClicked = event.target;
+
+        console.log(buttonClicked);
         buttonClicked.parentElement.parentElement.remove();
-        console.log(buttonClicked.parentElement.getElementsByClassName("rem-btn")[0].innerText);
+        
+
+        // var desertRef = firebase.storage().ref().child('images/030_Sample.png');
+        // desertRef.delete().then(() => {
+        // }).catch((error) => {
+        // // Uh-oh, an error occurred!
+        // console.log("delete error");
+        // });
+
+    }
+
+    async function updatefoodItem(event){
+
+        console.log(this.dataset.id,"h",event.target.getAttribute('data-id'));
+        var dataID =this.dataset.id;
+        localStorage.setItem("Idno",dataID);
 
 
+        // firebase.database().ref('food/'+dataID).once('value',function(snapshot){
+           
+        //     var nameV = snapshot.val().name;
+        //     var idnoV = snapshot.val().idno;
+        //     var priceV= snapshot.val().price;
+        //     var linkV = snapshot.val().Link;
+
+            
+
+        //     console.log(nameV,idnoV,priceV,linkV);
+        //     localStorage.setItem("Dname",nameV);
+        //     localStorage.setItem("Dprice",priceV);
+        //     localStorage.setItem("Dlink",linkV);
+
+            
+            
+    
+        // }); 
+
+        // let data=await firebase.database().ref(`food/${dataID}`).get();
+        // data=data.val();
+        // console.log(data.name);
+
+    
+        // console.log("Idno :" ,localStorage.getItem('Idno'));
+        // console.log("name :" ,localStorage.getItem('Dname'));
+        // console.log("price :" ,localStorage.getItem('Dprice'));
+        // console.log("Link :" ,localStorage.getItem('Dlink'));
+
+        window.location.href = 'Updatefooddetails.html';
+      //  return
+        
 
     }
         

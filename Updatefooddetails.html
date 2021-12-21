@@ -60,11 +60,11 @@
             <br>
             <section class="menu" id="menu">
             
-                   <input id="idbox" type="text" placeholder="Enter food ID" value=001 readonly><br>
+                   <input id="idbox" type="text" placeholder="Enter food ID"  value="" readonly><br>
                    <input id="namebox" type="text" placeholder="Enter Food Name"><br>
                    <input id="pricebox" type="number" min="0" placeholder="Enter Price"><br>
                     <img id="myimg" ><br>    
-                    <button id="select" class="btn cart">select  image</button>
+                    <button id="select" class="btn cart">Change Image</button>
                     <br>
                     <label id="upprogress" ></label><br>
                     <br>
@@ -92,100 +92,12 @@
       };
       firebase.initializeApp(firebaseConfig);
 
-      //reading data
-      var nameV,idV,priceV;
-      var imgname,imgurl;
-      var files=[];
-      var reader=new FileReader();
-
-      function ready()
-      {   idV=document.getElementById('idbox').value;
-          nameV=document.getElementById('namebox').value;
-          
-          priceV=document.getElementById('pricebox').value;
-         
-          console.log("intitialized");
-
-      }
-      //insert
-      document.getElementById('insert').onclick=function()
-      {
-          ready();
-
-          console.log("img upload");
-          imgname= document.getElementById('idbox').value +"_"+ document.getElementById('namebox').value;;
-          var uploadtask = firebase.storage().ref('images/'+imgname+".png").put(files[0]);
-
-          uploadtask.on('state_changed',function(snapshot){
-              var progress=(snapshot.bytesTransferred / snapshot.totalBytes)*100;
-              document.getElementById('upprogress').innerHTML='Progress :'+progress+'%'
-          },
-
-          //error
-
-          function(error){
-              alert('eroor in saving file');
-          },
-          //submit img link to database
-          function(){
-                    uploadtask.snapshot.ref.getDownloadURL().then(function(url){
-                    imgurl=url;
-                    console.log("insert");
-
-                    firebase.database().ref('food/'+idV).set({
-                        name: nameV,
-                        idno: idV,
-                        price: priceV,
-                        Link : imgurl
-                    },(error) => {
-                        if (error) {
-                        } else {
-                            location.href = "menu.html";
-                        }
-                      });
-                    
-                   
-                    console.log("inserted");
-                    firebase.database().ref('food/'+idV).on('value',function(snapshot){
-                        console.log(snapshot.val().name);
-                        console.log(snapshot.val().idno);
-                        console.log(snapshot.val().price);
-                        console.log(snapshot.val().Link);
-                    });
-    
-                     alert('details added successfullly');
-                 
-                
-                     
-                     
-                     
-
-            }
-          );
-          
-         
-        });
-        
-
-      }
-      document.getElementById("select").onclick= function(e)
-      {   console.log("select");
-          var input=document.createElement('input');
-          input.type='file';
-          input.onchange=e=>{
-              files= e.target.files;
-              reader = new FileReader();
-              reader.onload = function()
-              {
-                document.getElementById("myimg").src = reader.result;
-              }
-              reader.readAsDataURL(files[0]);
-          }
-          input.click();
-      }
-
+      
+      
     </script>
     <script src="js/logout.js"></script>
+    <script src="js/firebase.js"></script>
+    <Script src="js/Updatefooddetails.js"></Script>
 </body>
 </html>
   

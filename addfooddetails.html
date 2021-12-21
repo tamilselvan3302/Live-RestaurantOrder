@@ -99,9 +99,29 @@
 
       //reading data
       var nameV,idV,priceV;
-      var imgname,imgurl;
+      var imgname,imgurl,Key;
       var files=[];
       var reader=new FileReader();
+
+      async function foodcount(){
+
+        firebase.database().ref('food').once('value',function(snapshot){
+        snapshot.forEach(
+        function(ChildSnapshot){
+            
+            Key = +ChildSnapshot.key;
+            
+        }
+        );
+        console.log(Key);
+        document.getElementById('idbox').value= (Key+1).toString().padStart(3, "0");
+
+        }); 
+
+
+
+      }
+      foodcount();
 
       function ready()
       {   idV=document.getElementById('idbox').value;
@@ -110,6 +130,7 @@
           priceV=document.getElementById('pricebox').value;
          
           console.log("intitialized");
+          
 
       }
       //insert

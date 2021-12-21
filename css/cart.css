@@ -110,9 +110,11 @@
 }
 
 .cart-total {
-    text-align: end;
-    margin-top: 10px;
-    margin-right: 130px;
+    text-align: center;
+    border: 1px solid;
+    padding:20px;
+    padding-right: 160px;
+    margin-bottom: 100px;
 }
 
 .cart-total-title {
@@ -132,4 +134,26 @@
     margin: 40px auto 80px auto;
     font-size: 1.5em;
     padding: 10px 20px;
+}
+
+.name{
+    font-size: 30px;
+    padding: 20px;
+    background: #fff;
+   
+    border: 1px solid;
+    width: 100%;
+    margin:20px 0px;
+   
+}
+.paid {
+    color: white;
+    background-color: #EB5757;
+    border: none;
+    border-radius: 0.3em;
+    font-size: 35px;
+    font-weight: bold;
+    padding: 6px 20px;
+    margin-left: 320px;
+    cursor: pointer;
 }

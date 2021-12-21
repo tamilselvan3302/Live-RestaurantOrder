@@ -60,7 +60,7 @@ firebase.auth().onAuthStateChanged((usr)=>{
                     <i class="fas fa-star"></i>
                 </div>
                 <button href="#" class="btn cart" data-id="${idnoV}">Add to cart</button>
-                <button href="#" class="btn order">Order Now</button>
+                <button href="#" class="btn order" id="order" data-id="${idnoV}">Order Now</button>
             </div>
         </div>`
 
@@ -106,6 +106,7 @@ firebase.auth().onAuthStateChanged((usr)=>{
         function ready() {
 
             var addToCartButtons = document.querySelectorAll('.cart');
+            var orderButtons = document.querySelectorAll('.order');
             // console.log("hello", addToCartButtons.length);
             // console.log( addToCartButtons);
 
@@ -113,10 +114,17 @@ firebase.auth().onAuthStateChanged((usr)=>{
                 var button = addToCartButtons[i];
                 button.addEventListener('click',addToCartClicked);
              }
+
+             for (var i = 0; i < orderButtons.length; i++) {
+                var button = orderButtons[i];
+                button.addEventListener('click',addToCartClicked);
+             }
         }
         
 
         
+
+
         async function addToCartClicked(e)
         {   
         
@@ -125,6 +133,8 @@ firebase.auth().onAuthStateChanged((usr)=>{
             
 
             var idnoV, nameV,priceV,linkV;
+
+            console.log("console :",this.dataset.id);
             
             var id=this.dataset.id;
             
@@ -164,6 +174,23 @@ firebase.auth().onAuthStateChanged((usr)=>{
                                         console.log("error",error)
                                     } else {
                                         console.log("Added to cart");
+                                    }
+                                  });
+
+                        firebase.database().ref('Order/'+user+'/'+ id).set({
+                                    idno: idnoV,
+                                    name: nameV,
+                                    price: priceV,
+                                    Link : linkV,
+                                    quantity:1
+                                },(error) => {
+                                    if (error) {
+                                        console.log("error",error)
+                                    } else {
+                                        console.log("Added to Order");
+                                        if(e.target.innerHTML=="Order Now"){
+                                            window.location.replace('cart.html');
+                                        }
                                     }
                                   });
                 

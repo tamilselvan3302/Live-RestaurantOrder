@@ -8,7 +8,7 @@ const firebaseConfig = {
     databaseURL:"https://live-restaurant-order-default-rtdb.firebaseio.com/"
   };
   firebase.initializeApp(firebaseConfig);
-  
+
 
   var user;
   firebase.auth().onAuthStateChanged((usr)=>{
@@ -16,15 +16,12 @@ const firebaseConfig = {
       {
           location.replace("login.html")
       }
-      else if(usr.email=="admin@gmail.com")
+      else if(usr.email!="admin@gmail.com")
     {
-        location.replace("vieworder.html");
+        location.replace("cart.html");
     }
       else
-      {   console.log(usr.displayName);
-        console.log(usr.email);
-        console.log(usr.photoURL);
-        console.log(usr.emailVerified);
+      {   
           user=usr.email.replace("@gmail.com",'');
           window.onload= myFunction();
       }
@@ -32,16 +29,7 @@ const firebaseConfig = {
   
 
 function ready() {
-        var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-        for (var i = 0; i < removeCartItemButtons.length; i++) {
-            var button = removeCartItemButtons[i];
-            button.addEventListener('click',removeCartItem);
-        }
-        var quantityInputs= document.getElementsByClassName('cart-quantity-input');
-        for (var i = 0; i < quantityInputs.length; i++) {
-            var input = quantityInputs[i];
-            input.addEventListener('change', quantityChanged)
-        }
+       
 
         // var addToCartButtons = document.getElementsByClassName('shop-item-button');
         // for (var i = 0; i < addToCartButtons.length; i++) {
@@ -49,66 +37,43 @@ function ready() {
         //     button.addEventListener('click',addToCartClicked)
         // }
 
-        document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked);
-
+        var paidButtons = document.getElementsByClassName('paid')
+        for (var i = 0; i < paidButtons.length; i++) {
+            var button = paidButtons[i];
+            button.addEventListener('click',paidClicked);
+        }
+       
     }
-function purchaseClicked()
-{
-    alert('Thankyou for your purchase');
-    var cartItems = document.getElementsByClassName('cart-items')[0];
-    while(cartItems.hasChildNodes())
+    async function paidClicked(event)
     {
-        cartItems.removeChild(cartItems.firstChild);
-    }
-    updateCartTotal();
-
-}
-
-async function removeCartItem(event)
-{
-    
-
-    // let data = await firebase.database().ref('cart/'+user).get();
-    // var count = data.numChildren();
-    // console.log(count);
-    console.log(this.dataset.id,"h",event.target.getAttribute('data-id'));
-    var dataID =this.dataset.id;
-
-    firebase.database().ref('cart/'+user+'/'+dataID).remove();
-    firebase.database().ref('Order/'+user+'/'+dataID).remove();
-
-    var buttonClicked = event.target;
-    buttonClicked.parentElement.parentElement.remove();
-    console.log(buttonClicked.parentElement.getElementsByClassName("rem-btn")[0].innerText);
-
-    updateCartTotal();
-
-}
-
-function quantityChanged(event)
-{   
-
-    console.log(event.target.parentElement.getElementsByClassName("btn-danger")[0].getAttribute('data-id'));
-    var id = event.target.parentElement.getElementsByClassName("btn-danger")[0].getAttribute('data-id');
-    var input = event.target;
-    if(isNaN(input.value) || input.value<=0 )
-    {
-        input.value=1;
         
-    }
-    console.log(input.value)
-    let updatedata={
-        quantity: input.value
-    }
-    firebase.database().ref('cart/'+user+'/'+id).update(updatedata);
-    firebase.database().ref('Order/'+user+'/'+id).update(updatedata);
+        console.log(this.dataset.id,"h",event.target.getAttribute('data-id'));
+        var dataID =this.dataset.id;
 
-    updateCartTotal();
-}
+        firebase.database().ref('Order/'+dataID).remove();
+        firebase.database().ref('cart/'+dataID).remove();
+        
+        
+        var buttonClicked = event.target;
+        console.log(buttonClicked.parentElement.parentElement);
+
+
+        buttonClicked.parentElement.parentElement.remove();
+        
+
+        // var buttonClicked = event.target;
+        // buttonClicked.parentElement.parentElement.remove();
+        // console.log(buttonClicked.parentElement.getElementsByClassName("rem-btn")[0].innerText);
+        //var dataID =this.dataset.id;
+
+    }
+
+
+
 
 function updateCartTotal()
 {
-    var cartItemContainer = document.getElementsByClassName("cart-items")[0];
+    var cartItemContainer = document.getElementsByClassName("cart-items")[j];
     var  cartRows = cartItemContainer.getElementsByClassName('cart-row');
     var total=0;
     for (var i = 0; i < cartRows.length; i++) {
@@ -122,17 +87,20 @@ function updateCartTotal()
     }
     total= Math.round(total*100)/100;
     //updatetotal(total);
-    document.getElementsByClassName('cart-total-price')[0].innerText='$'+ total;   
+    document.getElementsByClassName('cart-total-price')[j].innerText='$'+ total;   
     
 }
 
 
-
+let j=-1;
 
 
 function adddetails(nameV, idnoV,priceV,linkV,quantityV)
 {   
-    document.getElementById("cart-items").innerHTML+=`
+    document.getElementsByClassName("cart-items")[j].innerHTML+=`
+
+    
+    
     <div class="cart-row">
         <div class="cart-item cart-column">
            
@@ -141,12 +109,11 @@ function adddetails(nameV, idnoV,priceV,linkV,quantityV)
         </div>
         <span class="cart-price cart-column">$${priceV}</span>
         <div class="cart-quantity cart-column">
-            <input class="cart-quantity-input" type="number" value="${quantityV}">
-            <button class="rem-btn btn-danger" type="button" data-id="${idnoV}">REMOVE ITEM</button>
+            <input class="cart-quantity-input" type="number" value="${quantityV}" readonly>
         </div>
    </div>`
 
-    updateCartTotal();
+     updateCartTotal();
   
     if (document.readyState == 'loading') {
         document.addEventListener('DOMContentLoaded', ready)
@@ -158,11 +125,56 @@ function adddetails(nameV, idnoV,priceV,linkV,quantityV)
 
 
 }
+
+
+
+
+
+
+
+
+
 function myFunction() {
     console.log('hello');
+
+    ///'+user
+firebase.database().ref('Order').once('value',function(snapshot){
+    snapshot.forEach(
+    function(ChildSnapshot){
+    console.log(ChildSnapshot.key); 
+    user = ChildSnapshot.key;
+
+   
+
     
 
-    firebase.database().ref('cart/'+user).once('value',function(snapshot){
+
+
+    document.getElementById("content-section").innerHTML+=`
+    <div class="outter">
+    <div>
+    <h1 class="name">${user}</h1>
+    </div>
+   
+    <div class="cart-row">
+            <span class="cart-item cart-header cart-column">ITEM</span>
+            <span class="cart-price cart-header cart-column">PRICE</span>
+            <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+        </div>
+        <div class="cart-items" >
+            
+        </div>
+        
+        <div class="cart-total">
+            <strong class="cart-total-title">Total</strong>
+            <span class="cart-total-price">$0</span>
+            <button class="paid" type="button" data-id="${user}">Paid</button>
+        </div>
+        </div>`
+    
+
+    firebase.database().ref('Order/'+user).once('value',function(snapshot){
+        j++;
         snapshot.forEach(
         function(ChildSnapshot){
         var nameV = ChildSnapshot.val().name;
@@ -170,6 +182,7 @@ function myFunction() {
         var priceV= ChildSnapshot.val().price;
         var linkV = ChildSnapshot.val().Link;
         var quantityV = ChildSnapshot.val().quantity;
+        
 
         adddetails(nameV, idnoV,priceV,linkV,quantityV);
         
@@ -178,8 +191,18 @@ function myFunction() {
 
 
     }); 
+   
+    }
+);
+}); 
 
-  
+
+
+
+
+
+
+
       
 
 }
