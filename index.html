@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATS Restaurant</title>
+    <link rel="icon" href="hotel.ico">
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style1.css">
@@ -134,6 +135,11 @@
             }
           }
           
+          .home .content h2{
+            font-size: 3rem;
+            color:rgb(199, 26, 26);
+            padding-bottom: 10px;;
+          }
           .home .content h3{
             font-size: 3.8rem;
             color:#333;
@@ -143,6 +149,10 @@
             font-size: 1.7rem;
             color:#666;
             padding:1rem 0;
+          }
+          .fas{
+            font-size: 30px;
+            padding-right: 20px;
           }
     </style>
 </head>
@@ -154,13 +164,12 @@
                 <li id="hom"><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
                 <li id="men"><a href="menu.html"><i class="fas fa-utensils"></i>Menu</a></li>
                 <li id="car"><a href="cart.html"><i class="fas fa-cart-plus"></i>cart</a></li>
-                <li id="off"><a href="#"><i class="fas fa-percent"></i>offers</a></li>
                 <li id="log"><a type="button" class="logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
             </ul>
             <div class="social_media">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
 
             </div>
             <div>
@@ -180,10 +189,29 @@
             <section class="home" id="home">
 
                 <div class="content">
-                    <h3>Food Made with Love</h3>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas accusamus tempore temporibus rem amet laudantium animi optio voluptatum. Natus obcaecati unde porro nostrum ipsam itaque impedit incidunt rem quisquam eos!.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas accusamus tempore temporibus rem amet laudantium animi optio voluptatum. Natus obcaecati unde porro nostrum ipsam itaque impedit incidunt rem quisquam eos!</p>
-                    <a href="#" class="btn order">order now</a>
+                  <h2>Welcome to ATS Restaurant</h2>
+                  <br>
+                  <h3>Food Made with Love</h3>
+                  <br>
+                  <br>
+                  <i  class="fas fa-map-marker-alt" style="display: inline-block;"></i>
+                  <div style="display: inline-block;"><a href="https://goo.gl/maps/HF41pu29ZXpdGXCP7" style="color: black; font-size: 30px;" target="_blank">Coimbatore, Tamil Nadu, 641049.</a></div>
+                  <br>
+                  <br>
+                  <br>
+                  <i class="fas fa-phone-alt" style="display: inline-block;"></i>
+                  <div style="display: inline-block;"><a style="color: black; font-size: 30px;" href="#" target="_blank">+91 9090909090</a></div>
+                  <br>  
+                  <br>
+                   <br>
+                  <i class="fas fa-envelope" style="display: inline-block;"></i>
+                  <div style="display: inline-block;"><a style="color: black; font-size: 30px;" href="#" target="_blank">atsrestaurant@gmail.com</a></div>
+                  <br>  
+                  <br>
+                  <a href="#" class="btn order">order now</a>
+                   
                 </div>
+                
             
                 <div class="image">
                     <img src="img/home-img.png" alt="">
