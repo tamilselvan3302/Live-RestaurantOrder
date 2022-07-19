@@ -47,12 +47,7 @@ firebase.auth().onAuthStateChanged((usr)=>{
 })
 
 
-    function createelemnet(ele,value)
-    {
-        let tag=document.createElement(ele);
-        tag.textContent=value;
-        return tag
-    }
+ 
 
     function adddetails(nameV, idnoV,priceV,linkV)
     {
